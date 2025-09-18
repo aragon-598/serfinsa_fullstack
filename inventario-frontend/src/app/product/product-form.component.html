@@ -1,0 +1,36 @@
+<main>
+  <mat-card>
+    <h2>Nuevo Producto</h2>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error *ngIf="productForm.get('nombre')?.hasError('required')">Nombre obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="descripcion" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="precio" type="number" />
+        <mat-error *ngIf="productForm.get('precio')?.hasError('required')">Precio obligatorio</mat-error>
+        <mat-error *ngIf="productForm.get('precio')?.hasError('min')">Precio debe ser mayor a 0</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Stock</mat-label>
+        <input matInput formControlName="stock" type="number" />
+        <mat-error *ngIf="productForm.get('stock')?.hasError('required')">Stock obligatorio</mat-error>
+        <mat-error *ngIf="productForm.get('stock')?.hasError('min')">Stock debe ser mayor o igual a 0</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Tipo de Producto</mat-label>
+        <mat-select formControlName="tipoProducto">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo.nombre }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="productForm.get('tipoProducto')?.hasError('required')">Tipo obligatorio</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading">Crear</button>
+    </form>
+  </mat-card>
+</main>

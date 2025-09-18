@@ -1,0 +1,43 @@
+<main>
+  <mat-card>
+    <div class="header">
+      <h2>Productos</h2>
+      <button mat-raised-button color="primary" (click)="createProduct()">Nuevo Producto</button>
+    </div>
+    <mat-table [dataSource]="products" class="mat-elevation-z2">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.nombre }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.descripcion }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.precio | currency }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stock">
+        <mat-header-cell *matHeaderCellDef>Stock</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.stock }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tipoProducto">
+        <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+        <mat-cell *matCellDef="let product">{{ product.tipoProducto?.nombre }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let product">
+          <button mat-icon-button color="primary" (click)="editProduct(product)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card>
+</main>

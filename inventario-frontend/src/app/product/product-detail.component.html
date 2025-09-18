@@ -1,0 +1,9 @@
+<main *ngIf="product">
+  <mat-card>
+    <h2>{{ product.nombre }}</h2>
+    <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
+    <p><strong>Precio:</strong> {{ product.precio | currency }}</p>
+    <p><strong>Stock:</strong> {{ product.stock }}</p>
+    <p><strong>Tipo de Producto:</strong> {{ product.tipoProducto?.nombre }}</p>
+  </mat-card>
+</main>

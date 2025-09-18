@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span>Inventario</span>
+  <span class="spacer"></span>
+  <ng-container *ngIf="auth.isAuthenticated()">
+    <button mat-button routerLink="/productos">Productos</button>
+    <button mat-button (click)="logout()">Logout</button>
+  </ng-container>
+</mat-toolbar>
