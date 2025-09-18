@@ -20,11 +20,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @PermitAll
     @GetMapping
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
+    @PermitAll
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> product = productService.getProductById(id);
@@ -51,7 +53,11 @@ public class ProductController {
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        Optional<Product> existing = productService.getProductById(id);
+        if (existing.isPresent()) {
+            productService.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

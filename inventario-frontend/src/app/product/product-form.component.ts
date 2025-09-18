@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ProductService, Product, TipoProducto } from './product.service';
+import { TipoProductoService } from './tipo-producto.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
@@ -35,6 +36,7 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
+    private tipoProductoService: TipoProductoService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -47,7 +49,16 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.tipoProductoService.getAll().subscribe({
+      next: tipos => {
+        this.tipos = tipos;
+      },
+      error: () => {
+        this.snackBar.open('Error al cargar tipos de producto', 'Cerrar', { duration: 3000 });
+      }
+    });
+  }
 
   private mapFormToProduct(): Product {
     const value = this.productForm.value;
@@ -61,7 +72,10 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.productForm.invalid) return;
+    if (this.productForm.invalid) {
+      this.snackBar.open('Completa todos los campos correctamente', 'Cerrar', { duration: 3000 });
+      return;
+    }
     this.loading = true;
     const product = this.mapFormToProduct();
     this.productService.createProduct(product).subscribe({

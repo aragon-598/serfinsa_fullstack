@@ -16,13 +16,11 @@ public class TipoProductoController {
     @Autowired
     private TipoProductoService tipoProductoService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public List<TipoProducto> getAll() {
         return tipoProductoService.getAll();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<TipoProducto> getById(@PathVariable Long id) {
         Optional<TipoProducto> tipo = tipoProductoService.getById(id);

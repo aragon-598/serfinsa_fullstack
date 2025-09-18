@@ -26,6 +26,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll() // Permitir OPTIONS para CORS
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/users").permitAll()
                 .requestMatchers("/api/products/**").hasAnyRole("ADMIN", "USER")

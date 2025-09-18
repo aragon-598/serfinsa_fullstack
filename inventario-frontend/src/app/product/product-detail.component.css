@@ -3,6 +3,11 @@ main {
 }
 mat-card {
   padding: 24px;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }

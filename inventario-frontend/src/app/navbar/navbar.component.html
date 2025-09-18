@@ -2,7 +2,8 @@
   <span>Inventario</span>
   <span class="spacer"></span>
   <ng-container *ngIf="auth.isAuthenticated()">
-    <button mat-button routerLink="/productos">Productos</button>
+  <button mat-button (click)="goHome()">Inicio</button>
+  <button mat-button (click)="goProductos()">Productos</button>
     <button mat-button (click)="logout()">Logout</button>
   </ng-container>
 </mat-toolbar>

@@ -63,19 +63,34 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
-    // El componente DeleteProductDialog se importa desde otro archivo
+    console.log('Botón eliminar clickeado:', product); // Depuración
     const dialogRef = this.dialog.open(DeleteProductDialog);
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.productService.deleteProduct(product.id!).subscribe({
+      console.log('Dialog result:', result); // Depuración
+      if (result) {
+        if (product.id == null) {
+          this.snackBar.open('El producto no tiene ID', 'Cerrar', { duration: 3000 });
+          console.error('ID de producto es null o undefined:', product);
+          return;
+        }
+        console.log('Eliminando producto con ID:', product.id); // Depuración
+        this.productService.deleteProduct(product.id).subscribe({
           next: () => {
+            console.log('Servicio deleteProduct ejecutado correctamente');
             this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 2000 });
             this.loadProducts();
           },
-          error: () => {
-            this.snackBar.open('Error al eliminar producto', 'Cerrar', { duration: 3000 });
+          error: (err) => {
+            console.error('Delete error:', err);
+            if (err.status === 404) {
+              this.snackBar.open('El producto no existe', 'Cerrar', { duration: 3000 });
+            } else {
+              this.snackBar.open('Error al eliminar producto', 'Cerrar', { duration: 3000 });
+            }
           }
         });
+      } else {
+        console.log('Eliminación no funciona'); // Depuración
       }
     });
   }

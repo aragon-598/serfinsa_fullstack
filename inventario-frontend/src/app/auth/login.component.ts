@@ -48,7 +48,12 @@ export class LoginComponent {
     this.auth.login(email!, password!).subscribe({
       next: () => {
         this.snackBar.open('Login exitoso', 'Cerrar', { duration: 2000 });
-        this.router.navigate(['/productos']);
+        // Verifica que el token esté en localStorage antes de navegar
+        if (this.auth.getToken()) {
+          this.router.navigate(['/home']);
+        } else {
+          this.snackBar.open('No se pudo guardar el token', 'Cerrar', { duration: 3000 });
+        }
       },
       error: () => {
         this.snackBar.open('Credenciales inválidas', 'Cerrar', { duration: 3000 });

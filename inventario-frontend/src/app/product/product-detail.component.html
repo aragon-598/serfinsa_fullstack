@@ -1,9 +1,41 @@
-<main *ngIf="product">
+<main>
   <mat-card>
-    <h2>{{ product.nombre }}</h2>
-    <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
-    <p><strong>Precio:</strong> {{ product.precio | currency }}</p>
-    <p><strong>Stock:</strong> {{ product.stock }}</p>
-    <p><strong>Tipo de Producto:</strong> {{ product.tipoProducto?.nombre }}</p>
+    <h2>Editar Producto</h2>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" />
+          <mat-error *ngIf="productForm.get('nombre')?.hasError('required')">Nombre obligatorio</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <input matInput formControlName="descripcion" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Precio</mat-label>
+          <input matInput formControlName="precio" type="number" />
+          <mat-error *ngIf="productForm.get('precio')?.hasError('required')">Precio obligatorio</mat-error>
+          <mat-error *ngIf="productForm.get('precio')?.hasError('min')">Precio debe ser mayor a 0</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Stock</mat-label>
+          <input matInput formControlName="stock" type="number" />
+          <mat-error *ngIf="productForm.get('stock')?.hasError('required')">Stock obligatorio</mat-error>
+          <mat-error *ngIf="productForm.get('stock')?.hasError('min')">Stock debe ser mayor o igual a 0</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de Producto</mat-label>
+          <mat-select formControlName="tipoProducto">
+            <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('tipoProducto')?.hasError('required')">Tipo obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+      <div style="display: flex; gap: 16px; margin-top: 24px;">
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading">Guardar</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
   </mat-card>
 </main>

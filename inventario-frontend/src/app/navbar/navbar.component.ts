@@ -15,6 +15,14 @@ import { MatButtonModule } from '@angular/material/button';
 export class NavbarComponent {
   constructor(public auth: AuthService, private router: Router) {}
 
+  goHome() {
+    this.router.navigate(['/home']);
+  }
+
+  goProductos() {
+    this.router.navigate(['/productos']);
+  }
+
   logout() {
     this.auth.logout();
   }
