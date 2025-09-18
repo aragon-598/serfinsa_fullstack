@@ -12,6 +12,10 @@ export interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  register(email: string, password: string, nombre: string): Observable<any> {
+    const rol = { nombre: 'ROLE_ADMIN' };
+    return this.http.post(`${environment.apiUrl}/users`, { email, password, nombre, rol });
+  }
   private apiUrl = `${environment.apiUrl}/auth/login`;
   private authState = new BehaviorSubject<boolean>(this.hasToken());
 

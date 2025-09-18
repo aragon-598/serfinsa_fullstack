@@ -10,6 +10,7 @@ import { LoginGuard } from './auth/login.guard';
 export const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'register', loadComponent: () => import('./auth/register.component').then(m => m.RegisterComponent) },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'productos', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: 'productos/nuevo', component: ProductFormComponent, canActivate: [AuthGuard] },
