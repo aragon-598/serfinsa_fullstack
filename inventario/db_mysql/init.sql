@@ -32,3 +32,17 @@ CREATE TABLE products (
     tipo_producto_id BIGINT,
     CONSTRAINT fk_tipo_producto FOREIGN KEY (tipo_producto_id) REFERENCES tipo_producto(id)
 );
+
+
+
+
+INSERT INTO tipo_producto (nombre, descripcion) VALUES ('Electrónico', 'Productos electrónicos y tecnológicos');
+INSERT INTO tipo_producto (nombre, descripcion) VALUES ('Ropa', 'Prendas de vestir y accesorios');
+INSERT INTO tipo_producto (nombre, descripcion) VALUES ('Alimento', 'Productos alimenticios y bebidas');
+INSERT INTO tipo_producto (nombre, descripcion) VALUES ('Hogar', 'Artículos para el hogar y decoración');
+INSERT INTO tipo_producto (nombre, descripcion) VALUES ('Deporte', 'Equipos y accesorios deportivos');
+
+
+INSERT INTO inventario.roles (nombre) VALUES
+	 ('ROLE_ADMIN'),
+	 ('ROLE_USER');
